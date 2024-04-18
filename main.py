@@ -3,22 +3,26 @@ from player import Player
 from scoreboard import Scoreboard
 from cars import Cars
 from random import randint
+import time
 
 
 screen = Screen()
 screen.setup(width=800, height=800)
 screen.bgcolor('grey')
-
+screen.tracer(0)
 
 player = Player() #Creates the turtle
 
 
 car = []  #Car object creation and logic, creates the obeject and then places them in a list 
-for i in range(10):
-    car.append(Cars())
+current_level = 1
+
+def level_generator(current_level): 
+    for i in range(current_level * 2):
+        car.append(Cars())
 
 score = Scoreboard() #Initiate the Scoreboard class object 
-score.update_scoreboard() #Adds the inital score to the screen
+score.update_scoreboard(current_level) #Adds the inital score to the screen
 
 
 
@@ -30,20 +34,42 @@ screen.onkeypress(player.move_down, 'Down')
 screen.onkeypress(player.move_left, 'Left')
 screen.onkeypress(player.move_right, 'Right')
 
-
+level_generator(current_level) #inital car creation 
 
 game_loop = True
 while game_loop:
-
+    screen.update()
+    time.sleep(0.09) #Screen refresh rate. 
     for i in car:
         if i.xcor() < -380:      #Detects if the car object has exceeded the left side, if so it moves the X cor to the right side
             current_y = i.ycor()
             i.goto(380, current_y)
 
         if player.ycor() > 380:
-            game_loop = False ##############Logic to be called to change level 
+            score.level_up(current_level)
+            screen.update()
+            time.sleep(1)  
+            score.countdown_3()
+            screen.update()
+            time.sleep(0.4)
+            score.countdown_2()
+            screen.update()
+            time.sleep(0.4)
+            score.countdown_1()    ################MAKE THIS A LOOP AND MAKE IT FROM 10 and FASTER!!
+            screen.update()
+            time.sleep(0.4)
+            score.countdown_go()
+            screen.update()
+            time.sleep(0.1)
+            current_level += 1
+            score.update_scoreboard(current_level)
+            level_generator(current_level)
+            player.reset()
+            break
 
-        if player.distance(i) < 30: #######collision logic for player 
+            
+            
+        if player.distance(i) < 25: #######collision logic for player 
             game_loop = False
 
 
