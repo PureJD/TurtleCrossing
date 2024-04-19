@@ -24,25 +24,18 @@ class Scoreboard(Turtle):
         self.goto(0, 0)
         self.write(f'LEVEL {current_level} COMPLETE!', align="center", font=("Courier", 20, "normal"))
 
-    def countdown_3(self):
+    def lose(self):
         self.clear()
-        self.write(f'3', align="center", font=("Courier", 20, "normal"))
-        
-    
-    def countdown_2(self):
-        self.clear()
-        self.write(f'2', align="center", font=("Courier", 20, "normal"))
-        
+        self.goto(0, 0)
+        self.write(f'YOU HAVE BEEN FLATTENED!', align="center", font=("Courier", 20, "normal"))    
 
-    def countdown_1(self):
+    def countdown(self, countdown):
         self.clear()
-        self.write(f'1', align="center", font=("Courier", 20, "normal"))
+        self.goto(40, 0)
+        self.write(f'{countdown}!', align="center", font=("Courier", 200, "normal"))
         
     
-    def countdown_go(self):
-        self.clear()
-        self.write(f'GO!', align="center", font=("Courier", 20, "normal"))
-        
+    
         
     
         

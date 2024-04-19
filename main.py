@@ -24,7 +24,14 @@ def level_generator(current_level):
 score = Scoreboard() #Initiate the Scoreboard class object 
 score.update_scoreboard(current_level) #Adds the inital score to the screen
 
-
+def countdown():
+    for i in range(10, 1, -1):
+        score.countdown(i)
+        screen.update()
+        time.sleep(0.02)    
+    score.countdown('GO')
+    screen.update()
+    time.sleep(0.2)
 
 
 
@@ -48,19 +55,8 @@ while game_loop:
         if player.ycor() > 380:
             score.level_up(current_level)
             screen.update()
-            time.sleep(1)  
-            score.countdown_3()
-            screen.update()
-            time.sleep(0.4)
-            score.countdown_2()
-            screen.update()
-            time.sleep(0.4)
-            score.countdown_1()    ################MAKE THIS A LOOP AND MAKE IT FROM 10 and FASTER!!
-            screen.update()
-            time.sleep(0.4)
-            score.countdown_go()
-            screen.update()
-            time.sleep(0.1)
+            time.sleep(1) 
+            countdown() 
             current_level += 1
             score.update_scoreboard(current_level)
             level_generator(current_level)
@@ -70,6 +66,9 @@ while game_loop:
             
             
         if player.distance(i) < 25: #######collision logic for player 
+            score.lose()
+            screen.update()
+            time.sleep(2)
             game_loop = False
 
 
